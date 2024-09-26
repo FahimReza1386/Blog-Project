@@ -7,10 +7,9 @@ User=get_user_model()
 
 class Post(models.Model):
 
-    '''
+    """
         this is a class to define posts for blog app
-    '''
-
+    """
 
     author = models.ForeignKey(User , on_delete=models.CASCADE)
     image=models.ImageField(null=True, blank=True)

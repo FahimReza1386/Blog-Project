@@ -7,5 +7,36 @@
 <body>
     Hi {{ name }}
     Blog Page
+    <hr/>
+    {% for post in object_list %}
+
+        <a href="{% url 'blog:post-detail' pk=post.id %}">  {{ post.title }}</a>
+            <a href="{% url 'blog:UpdatePost' pk=post.id %}"><h4>ویرایش</h4></a>
+            <a href="{% url 'blog:DeletePost' pk=post.id %}"><h4>حذف</h4></a>
+
+        <h3>{{ post.content }}</h3>
+        <h6>{{ post.id }}</h6>
+        <hr/>
+
+    {% endfor %}
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 </body>
 </html>

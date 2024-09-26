@@ -1,0 +1,5 @@
+<form method="post">
+    {% csrf_token %}
+    <p>دوست داری اینو حذف کنی ؟ {{ object.neme }}</p>
+    <input type="submit" value="بله">
+</form>
