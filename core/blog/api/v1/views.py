@@ -2,9 +2,12 @@ from django.shortcuts import get_object_or_404,render
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView , ListAPIView , ListCreateAPIView , CreateAPIView , RetrieveAPIView , RetrieveUpdateAPIView , RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from rest_framework import viewsets
 from ...models import Post
 from .serializers import PostSerializer
+from rest_framework import mixins
 
 """
     Function Base View Api
@@ -65,7 +68,7 @@ from .serializers import PostSerializer
 """
 Class Base View Api
 """
-
+'''
 class PostList(APIView):
     
     """
@@ -85,9 +88,39 @@ class PostList(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+'''
+
+
+'''
+class PostList(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin):
+    """
+        Getting a list of Post Model an Creating New Posts
+    """
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+    def get(self , request , *args , **kwargs):
+        return self.list(request , *args , **kwargs)
     
+    def post(self , request , *args , **kwargs):
+        return self.create(request , *args , **kwargs)
 
 
+'''
+
+
+class PostList(ListCreateAPIView):
+    """
+        Getting a list of Post Model an Creating New Posts
+    """
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+'''
 class PostDetail(APIView):
     """
         Getting and Putting and Deleting of the Post Model With Class Base View
@@ -97,19 +130,115 @@ class PostDetail(APIView):
     serializer_class = PostSerializer
 
 
-    def get(self , request , id):
-        post = get_object_or_404(Post,pk=id)
+    def get(self , request , pk):
+        post = get_object_or_404(Post,pk=pk)
         serializer  = self.serializer_class(post)
         return Response(serializer.data)
 
-    def put(self , request , id):
-        post = get_object_or_404(Post,pk=id)
+    def put(self , request , pk):
+        post = get_object_or_404(Post,pk=pk)
         serializer=self.serializer_class(post,data=request.data)
+        serializer.is_valpk(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self , request , pk):
+        post = get_object_or_404(Post , pk=pk)
+        post.delete()
+        return Response({'detail' : 'item removed successfully .'})
+'''
+
+
+'''
+class PostDetail(GenericAPIView , mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.DestroyModelMixin):
+    """
+        Getting and Putting and Deleting of the Post Model With Class Base View
+    """
+
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+    def get(self , request , *args , **kwargs):
+        return self.retrieve(request , *args , **kwargs)
+
+    # def get(self , request , id):
+    #     post = get_object_or_404(Post,pk=id)
+    #     serializer  = self.serializer_class(post)
+    #     return Response(serializer.data)
+        
+
+    def put(self , request , *args , **kwargs):
+        return self.update(request , *args , **kwargs)
+
+    # def put(self , request , id):
+    #     post = get_object_or_404(Post,pk=id)
+    #     serializer=self.serializer_class(post,data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #     return Response(serializer.data)
+    
+    def delete(self , request , *args , **kwargs):
+        return self.destroy(request , *args , **kwargs)
+
+    # def delete(self , request , id):
+    #     post = get_object_or_404(Post , pk=id)
+    #     post.delete()
+    #     return Response({'detail' : 'item removed successfully .'})
+'''
+
+
+class PostDetail(RetrieveUpdateDestroyAPIView):
+    """
+        Getting and Putting and Deleting of the Post Model With Class Base View
+    """
+
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+
+
+
+class PostViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+
+    def list(self , request):
+        serializer = self.serializer_class(self.queryset,many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self , request , pk=None):
+        obj_post = get_object_or_404(self.queryset , pk=pk)
+        serializer = self.serializer_class(obj_post)
+        return Response(serializer.data)
+    
+    def create(self , request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def update(self , request , pk=None):
+        obj=get_object_or_404(self.queryset , pk=pk)
+        serializer = self.serializer_class(obj,data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
-    def delete(self , request , id):
-        post = get_object_or_404(Post , pk=id)
-        post.delete()
-        return Response({'detail' : 'item removed successfully .'})
+    def partial_update(self , request , pk=None):
+        obj = get_object_or_404(self.queryset , pk=pk)
+        serializer= self.serializer_class(obj , data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
+
+    def destroy(self , request , pk=None):
+        obj_post = get_object_or_404(self.queryset , pk=pk)
+        obj_post.delete()
+        return Response({'detail' : 'item removed successfully'})
