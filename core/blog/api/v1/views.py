@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView , ListAPIView , ListCreateAPIView , CreateAPIView , RetrieveAPIView , RetrieveUpdateAPIView , RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import viewsets
-from ...models import Post
-from .serializers import PostSerializer
+from ...models import Post , Category
+from .serializers import PostSerializer , CategorySerializer
 from rest_framework import mixins
 
 """
@@ -201,6 +201,10 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
 
 
+"""
+    View Set Class Base View
+"""
+
 
 class PostViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
@@ -242,3 +246,22 @@ class PostViewSet(viewsets.ViewSet):
         obj_post = get_object_or_404(self.queryset , pk=pk)
         obj_post.delete()
         return Response({'detail' : 'item removed successfully'})
+
+
+
+"""
+    Model View Set in Class Base View
+"""
+class PostModelViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+
+
+class CategoryModelViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
