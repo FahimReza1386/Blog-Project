@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from ...models import Post , Category
 from .serializers import PostSerializer , CategorySerializer
 from rest_framework import mixins
-
+from rest_framework.decorators import action
 """
     Function Base View Api
 """
@@ -258,7 +258,9 @@ class PostModelViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
-
+    @action(methods=['get'],detail=False)
+    def get_ok(self , request):
+        return Response({'detail':'ok'})
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
 
