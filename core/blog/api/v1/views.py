@@ -9,6 +9,7 @@ from ...models import Post , Category
 from .serializers import PostSerializer , CategorySerializer
 from rest_framework import mixins
 from rest_framework.decorators import action
+from .permissions import IsOwnerOrReadOnly
 """
     Function Base View Api
 """
@@ -254,7 +255,7 @@ class PostViewSet(viewsets.ViewSet):
 """
 class PostModelViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated , IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
@@ -264,6 +265,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated , IsOwnerOrReadOnly]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
