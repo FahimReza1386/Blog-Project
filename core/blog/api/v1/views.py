@@ -10,6 +10,9 @@ from .serializers import PostSerializer , CategorySerializer
 from rest_framework import mixins
 from rest_framework.decorators import action
 from .permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
+
+
 """
     Function Base View Api
 """
@@ -258,6 +261,8 @@ class PostModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated , IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category' , 'author' , 'status']
 
     @action(methods=['get'],detail=False)
     def get_ok(self , request):
