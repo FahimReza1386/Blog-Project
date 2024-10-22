@@ -10,8 +10,9 @@ from .serializers import PostSerializer , CategorySerializer
 from rest_framework import mixins
 from rest_framework.decorators import action
 from .permissions import IsOwnerOrReadOnly
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter , OrderingFilter
+from .paginations import LargeResultsSetPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 
@@ -267,6 +268,8 @@ class PostModelViewSet(viewsets.ModelViewSet):
     filterset_fields = ['category' , 'author' , 'status']
     search_fields = ['title','content']
     ordering_fields= ['category']
+    pagination_class = LargeResultsSetPagination
+
 
 
     @action(methods=['get'],detail=False)
