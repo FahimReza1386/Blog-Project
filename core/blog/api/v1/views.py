@@ -11,7 +11,7 @@ from rest_framework import mixins
 from rest_framework.decorators import action
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.filters import SearchFilter , OrderingFilter
-from .paginations import LargeResultsSetPagination
+from .paginations import DefaultPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -265,10 +265,10 @@ class PostModelViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     filter_backends = [DjangoFilterBackend , SearchFilter , OrderingFilter]
-    filterset_fields = ['category' , 'author' , 'status']
+    filterset_fields = {'category':['exact','in'] , 'author':['exact'] , 'status':['exact']}
     search_fields = ['title','content']
     ordering_fields= ['category']
-    pagination_class = LargeResultsSetPagination
+    # pagination_class = DefaultPagination
 
 
 
