@@ -118,14 +118,14 @@ class PostList(GenericAPIView,mixins.ListModelMixin,mixins.CreateModelMixin):
 '''
 
 
-class PostList(ListCreateAPIView):
-    """
-        Getting a list of Post Model an Creating New Posts
-    """
+# class PostList(ListCreateAPIView):
+#     """
+#         Getting a list of Post Model an Creating New Posts
+#     """
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = PostSerializer
-    queryset = Post.objects.all()
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = PostSerializer
+#     queryset = Post.objects.all()
 
 '''
 class PostDetail(APIView):
@@ -196,15 +196,15 @@ class PostDetail(GenericAPIView , mixins.RetrieveModelMixin , mixins.UpdateModel
 '''
 
 
-class PostDetail(RetrieveUpdateDestroyAPIView):
-    """
-        Getting and Putting and Deleting of the Post Model With Class Base View
-    """
+# class PostDetail(RetrieveUpdateDestroyAPIView):
+#     """
+#         Getting and Putting and Deleting of the Post Model With Class Base View
+#     """
 
 
-    permission_classes = [IsAuthenticated]
-    serializer_class = PostSerializer
-    queryset = Post.objects.all()
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = PostSerializer
+#     queryset = Post.objects.all()
 
 
 
@@ -213,46 +213,46 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 """
 
 
-class PostViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
-    serializer_class = PostSerializer
-    queryset = Post.objects.all()
+# class PostViewSet(viewsets.ViewSet):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = PostSerializer
+#     queryset = Post.objects.all()
 
 
-    def list(self , request):
-        serializer = self.serializer_class(self.queryset,many=True)
-        return Response(serializer.data)
+#     def list(self , request):
+#         serializer = self.serializer_class(self.queryset,many=True)
+#         return Response(serializer.data)
     
-    def retrieve(self , request , pk=None):
-        obj_post = get_object_or_404(self.queryset , pk=pk)
-        serializer = self.serializer_class(obj_post)
-        return Response(serializer.data)
+#     def retrieve(self , request , pk=None):
+#         obj_post = get_object_or_404(self.queryset , pk=pk)
+#         serializer = self.serializer_class(obj_post)
+#         return Response(serializer.data)
     
-    def create(self , request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+#     def create(self , request):
+#         serializer = self.serializer_class(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
     
-    def update(self , request , pk=None):
-        obj=get_object_or_404(self.queryset , pk=pk)
-        serializer = self.serializer_class(obj,data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+#     def update(self , request , pk=None):
+#         obj=get_object_or_404(self.queryset , pk=pk)
+#         serializer = self.serializer_class(obj,data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
 
-    def partial_update(self , request , pk=None):
-        obj = get_object_or_404(self.queryset , pk=pk)
-        serializer= self.serializer_class(obj , data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+#     def partial_update(self , request , pk=None):
+#         obj = get_object_or_404(self.queryset , pk=pk)
+#         serializer= self.serializer_class(obj , data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
 
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
-    def destroy(self , request , pk=None):
-        obj_post = get_object_or_404(self.queryset , pk=pk)
-        obj_post.delete()
-        return Response({'detail' : 'item removed successfully'})
+#     def destroy(self , request , pk=None):
+#         obj_post = get_object_or_404(self.queryset , pk=pk)
+#         obj_post.delete()
+#         return Response({'detail' : 'item removed successfully'})
 
 
 
