@@ -18,10 +18,16 @@ urlpatterns = [
     path('token/login/' , views.CustomObtainAuthToken.as_view() , name="Token Login"),
     path('token/logout/' , views.CustomDiscardAuthToken.as_view() , name="Token Logout"),
 
-    # Login jwt
-    path('jwt/create/' , TokenObtainPairView.as_view() , name="Create-JWT"),
-    path('jwt/refresh/' , TokenRefreshView.as_view() , name="Refresh-JWT"),
-    path('jwt/verify/' , TokenVerifyView.as_view() , name="Verify-JWT"),
+    # Create and Refresh and Verify with jwt
+    #     
+    # path('jwt/create/' , TokenObtainPairView.as_view() , name="Create-JWT"),
+    # path('jwt/refresh/' , TokenRefreshView.as_view() , name="Refresh-JWT"),
+    # path('jwt/verify/' , TokenVerifyView.as_view() , name="Verify-JWT"),
 
+
+    # Create and Refresh and Verify (Custom) with jwt
+    path('jwt/create/' , views.CustomTokenObtainPairView.as_view() , name="Create-JWT"),
+    path('jwt/refresh/' , views.CustomTokenRefreshView.as_view() , name="Refresh-JWT"),
+    path('jwt/verify/' , views.CustomTokenVerifyView.as_view() , name="Verify-JWT"),
 
 ]
