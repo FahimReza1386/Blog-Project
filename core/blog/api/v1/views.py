@@ -12,7 +12,7 @@ from rest_framework.decorators import action
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.filters import SearchFilter , OrderingFilter
 from .paginations import DefaultPagination
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend # type: ignore
 
 
 
@@ -145,7 +145,7 @@ class PostDetail(APIView):
     def put(self , request , pk):
         post = get_object_or_404(Post,pk=pk)
         serializer=self.serializer_class(post,data=request.data)
-        serializer.is_valpk(raise_exception=True)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 

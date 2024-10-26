@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from rest_framework_simplejwt.views import TokenObtainPairView , TokenRefreshView , TokenVerifyView
+from rest_framework_simplejwt.views import TokenObtainPairView , TokenRefreshView , TokenVerifyView # type: ignore
 # from rest_framework.authtoken.views import ObtainAuthToken
 
 app_name = 'api-v1'
