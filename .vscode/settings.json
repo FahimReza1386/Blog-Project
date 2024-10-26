@@ -1,5 +1,10 @@
 {
     "cSpell.words": [
         "indexview"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#083144",
+        "titleBar.activeBackground": "#0C455F",
+        "titleBar.activeForeground": "#F5FBFE"
+    }
 }

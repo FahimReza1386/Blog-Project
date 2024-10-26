@@ -5,12 +5,14 @@ from django.views.generic.base import RedirectView
 from django.views.generic import ListView,DetailView,FormView,CreateView,UpdateView,DeleteView
 from .forms import PostForm
 from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin , PermissionRequiredMixin
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 # Create your views here.
 
 #a function based view to show index page
 """
-
 def index(request):
     return  HttpResponse('Hi')
 
@@ -44,20 +46,22 @@ class redirectToMaktab(RedirectView):
 
 
 
-class Posts(ListView):
+class Posts(PermissionRequiredMixin,LoginRequiredMixin,ListView):
     # model = Post
-    # queryset = Post.objects.filter(status=True)
-    model = Post
+    queryset = Post.objects.filter(status=True)
     template_name = 'base.html'
+    permission_required = 'blog.view_post'
     context_object_name = 'posts'
     paginate_by = 3
+    redirect_field_name = 'redirect_to'
+
     ordering = ['id']
     # def get_queryset(self):
     #     posts=Post.objects.filter(status = True)
     #     return posts
     
     
-class PostDetails(DetailView):
+class PostDetails(LoginRequiredMixin,DetailView):
     model = Post
 
 
@@ -74,7 +78,7 @@ class PostCreateView(FormView):
 
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin,CreateView):
     model=Post
     template_name = 'blog/contact.html'
     success_url = '/blog/post/'
@@ -86,15 +90,22 @@ class PostCreateView(CreateView):
         return super().form_valid(form)
 
 
-class UpdatePost(UpdateView):
+class UpdatePost(LoginRequiredMixin,UpdateView):
     model = Post
     success_url = '/blog/post/'
     template_name = 'blog/contact.html'
     form_class = PostForm
 
 
-class DeletePost(DeleteView):
+class DeletePost(LoginRequiredMixin,DeleteView):
     model = Post
     success_url = '/blog/post/'
     template_name = 'blog/delete_form.html'
 
+
+# ---------------------------  Api
+
+
+@api_view()
+def api_post_list_view(request):
+    return Response({'name' : 'fahimreza.ir'})
