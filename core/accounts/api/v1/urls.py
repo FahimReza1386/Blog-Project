@@ -11,7 +11,7 @@ urlpatterns = [
     path('registration/' , views.RegistrationApiView.as_view() , name="Registration"),
 
     # Change Password
-    
+    path('change-password/' , views.CustomChangePasswordApi.as_view() , name="Change-Password"),
     # Reset Password
     
     # Login Token
