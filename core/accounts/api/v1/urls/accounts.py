@@ -10,7 +10,18 @@ urlpatterns = [
 
     # Change Password
     path('change-password/' , views.CustomChangePasswordApi.as_view() , name="Change-Password"),
+    
+    path('test-email/' , views.TestEmailSend.as_view() , name="Test-Email"),
+     
+    # Activation
+    # path('activation/confirm/' , views)
+    # Resend Activation
+    # path('activation/resend/' , views)
+
+
+
     # Reset Password
+
     
     # Login Token
     path('token/login/' , views.CustomObtainAuthToken.as_view() , name="Token Login"),
@@ -27,5 +38,9 @@ urlpatterns = [
     path('jwt/create/' , views.CustomTokenObtainPairView.as_view() , name="Create-JWT"),
     path('jwt/refresh/' , views.CustomTokenRefreshView.as_view() , name="Refresh-JWT"),
     path('jwt/verify/' , views.CustomTokenVerifyView.as_view() , name="Verify-JWT"),
+
+
+    # Send Email
+
 
 ]

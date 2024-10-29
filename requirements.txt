@@ -15,3 +15,5 @@ drf-yasg[validation]
 
 # deployment modules
 
+djangorestframework-simplejwt
+coreapi

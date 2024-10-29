@@ -10,6 +10,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView , TokenRefreshVie
 from rest_framework.generics import UpdateAPIView , GenericAPIView
 from django.contrib.auth import get_user_model
 from ...models import Profile
+from django.core.mail import send_mail
 
 
 user   = get_user_model()
@@ -61,6 +62,7 @@ class CustomDiscardAuthToken(APIView):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
     
 
 
@@ -111,3 +113,16 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         return obj
     
 
+
+class TestEmailSend(generics.GenericAPIView):
+    def get(self , request , *args , **kwargs):
+
+        send_mail(
+            "Subject here",
+            "Here is the message.",
+            "from@example.com",
+            ["Fahimreza20200@gmail.com"],
+            fail_silently=False,
+        )
+
+        return Response("Email Send")
