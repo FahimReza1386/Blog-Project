@@ -13,8 +13,8 @@ urlpatterns = [
     
     path('test-email/' , views.TestEmailSend.as_view() , name="Test-Email"),
      
-    # Activation
-    # path('activation/confirm/' , views)
+    # Account Activation .
+    path('activation/confirm/<str:token>' , views.ActivationApiView.as_view() , name="Account Activation Api."),
     # Resend Activation
     # path('activation/resend/' , views)
 

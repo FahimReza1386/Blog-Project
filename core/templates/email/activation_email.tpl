@@ -2,13 +2,14 @@
 
 
 {% block subject %}
-    Account Activation
+
+    Account Activation.
+
 {% endblock %}
 
 
 {% block html %}
 
-
-This is a <strong>{{ token }}</strong> of the my account  .
+http://127.0.0.1:8000/accounts/api/v1/activation/confirm/{{ token  }}
 
 {% endblock %}
