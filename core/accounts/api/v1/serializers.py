@@ -1,10 +1,12 @@
 from rest_framework import serializers
+from django.shortcuts import get_object_or_404
 from ...models import *
 from django.core import exceptions
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer # type: ignore
+from rest_framework.response import Response
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(max_length=255 , write_only=True)
@@ -108,3 +110,32 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['id' , 'email' , 'first_name' , 'last_name' , 'image']
         read_only_field = ['email']
+
+
+
+
+class ActivationResnetApiSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+    # def is_valid(self, *, raise_exception=False):
+    #     user_obj = get_object_or_404(User , email=self.email)
+    #     if user_obj:
+    #         return super().is_valid(raise_exception=raise_exception)
+    #     else:
+    #         return Response({'details':'email in not found .'})
+        
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+
+        try:
+            user_obj = get_object_or_404(User , email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({'details' : 'user does not exist'})
+        
+        if user_obj.is_verified:
+            raise serializers.ValidationError({'details' : "user is already activated and verified ."})
+        
+        attrs['user'] = user_obj
+        return super().validate(attrs)

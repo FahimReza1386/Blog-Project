@@ -188,9 +188,20 @@ class ActivationApiView(APIView):
             return Response({'details' : 'your account have been verified and activated successfully .'})
         
 
+class ActivationResentApiView(generics.GenericAPIView):
+    serializer_class = ActivationResnetApiSerializer
 
+    def post(self , request , *args, **kwargs):
+            serializer = self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user_obj = serializer.validated_data['user']    
+            token = self.get_tokens_for_user(user_obj)
+            email_obj = EmailMessage('email/activation_email.tpl' ,  {'token':token} , 'fahimreza20200@gmail.com' , to=[user_obj.email])
+            EmailThread(email_obj).start()
+            return Response({"details" : 'user activation resent successfully .'} , status=status.HTTP_200_OK)
+            
+    def get_tokens_for_user(self ,user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
+    
 
-
-
-
-        
