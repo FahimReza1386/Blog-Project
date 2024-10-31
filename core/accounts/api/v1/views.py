@@ -15,7 +15,9 @@ from mail_templated import send_mail # type: ignore
 from mail_templated import EmailMessage # type: ignore
 from .utils import EmailThread
 from rest_framework_simplejwt.tokens import RefreshToken # type: ignore
-
+import jwt # type: ignore
+from jwt.exceptions import ExpiredSignatureError , InvalidSignatureError # type: ignore
+from django.conf import settings
 
 user   = get_user_model()
 
@@ -167,10 +169,28 @@ class TestEmailSend(generics.GenericAPIView):
 class ActivationApiView(APIView):
     def get(self , request , token , *args , **kwargs):
         # Decode -> id user
+        try:
+            token = jwt.decode(token , settings.SECRET_KEY , algorithms=["HS256"])
+            user_id = token.get('user_id')
+        except ExpiredSignatureError:
+            return Response({'detailS':'Token Has Been Expired . '} , status=status.HTTP_400_BAD_REQUEST)
+        except InvalidSignatureError:
+            return Response({'detailS':'Token Is Not Valid . '} , status=status.HTTP_400_BAD_REQUEST)
         # get object by id
-        # user is_verified -> True
+        user_obj = get_object_or_404(User , pk=user_id)
+        if user_obj.is_verified:
+            # valid response ok
+            return Response({'details' : 'your account is verified .'})
+        else :
+            # user is_verified -> True
+            user_obj.is_verified = True
+            user_obj.save()
+            return Response({'details' : 'your account have been verified and activated successfully .'})
+        
 
-        # id My Tokne Not Valid
 
-        # valid response ok
-        return Response('Ok')
+
+
+
+
+        
