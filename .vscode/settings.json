@@ -1,11 +1,13 @@
 {
     "cSpell.words": [
         "authtoken",
+        "djoser",
         "filterset",
         "indexview",
         "paginations",
         "simplejwt",
-        "viewsets"
+        "viewsets",
+        "yasg"
     ],
     "workbench.colorCustomizations": {
         "activityBar.background": "#083144",

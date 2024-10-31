@@ -5,6 +5,7 @@ python-decouple
 pillow
 djangorestframework
 coreapi
+djoser
 
 # third party modules
 
