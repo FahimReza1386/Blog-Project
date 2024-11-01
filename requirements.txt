@@ -20,3 +20,11 @@ djangorestframework-simplejwt
 # Email Third Party modules
 django-mail-templated
 
+
+
+# Refactoring
+
+black
+flake8
+
+# Testing
