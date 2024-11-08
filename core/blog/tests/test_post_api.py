@@ -14,13 +14,15 @@ def api_client():
 
 @pytest.fixture
 def common_user():
-    user = User.objects.create_user(email="Fahimreza20200@gmail.com", password="Fahim2684")
+    user = User.objects.create_user(
+        email="Fahimreza20200@gmail.com", password="Fahim2684"
+    )
     return user
 
 
 @pytest.fixture
 def get_category():
-    category = Category.objects.create(name='Test')
+    category = Category.objects.create(name="Test")
     return category
 
 
@@ -32,10 +34,10 @@ class TestPostApi:
         assert response.status_code == 200
 
     def create_post_response_401_status(self, api_client, get_category):
-        url = reverse('blog:api-v1:post-list')
+        url = reverse("blog:api-v1:post-list")
         data = {
-            "title": 'Hi-Test5-6',
-            'content': 'Test Content',
+            "title": "Hi-Test5-6",
+            "content": "Test Content",
             "status": True,
             "category": get_category,
             "published_date": datetime.now(),
@@ -43,11 +45,13 @@ class TestPostApi:
         response = api_client.post(url, data)
         assert response.status_code == 401
 
-    def test_create_post_response_201_status(self, api_client, common_user, get_category):
-        url = reverse('blog:api-v1:post-list')
+    def test_create_post_response_201_status(
+        self, api_client, common_user, get_category
+    ):
+        url = reverse("blog:api-v1:post-list")
         data = {
-            "title": 'Hi-Test5-6',
-            'content': 'Test Content',
+            "title": "Hi-Test5-6",
+            "content": "Test Content",
             "status": True,
             "category": get_category,
             "published_date": datetime.now(),
@@ -57,13 +61,11 @@ class TestPostApi:
         response = api_client.post(url, data)
         assert response.status_code == 201, response.content
 
-    def test_create_post_invalid_data_response_400_status(self, api_client, common_user):
-        url = reverse('blog:api-v1:post-list')
-        data = {
-            "title": 'Hi-Test5-6',
-            'content': 'Test Content',
-            "status": True
-        }
+    def test_create_post_invalid_data_response_400_status(
+        self, api_client, common_user
+    ):
+        url = reverse("blog:api-v1:post-list")
+        data = {"title": "Hi-Test5-6", "content": "Test Content", "status": True}
         user = common_user
         api_client.force_login(user=user)
         response = api_client.post(url, data)
