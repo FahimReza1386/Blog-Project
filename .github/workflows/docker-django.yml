@@ -17,6 +17,6 @@ jobs:
     - name: install docker
       run: apt-get install docker
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker-compose up -d
     - name: test Docker
       run : docker exec backend sh -c "flake8 && pytest . "
