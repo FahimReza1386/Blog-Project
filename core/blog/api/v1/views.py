@@ -267,7 +267,7 @@ class PostDetail(GenericAPIView , mixins.RetrieveModelMixin , mixins.UpdateModel
 
 class PostModelViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
