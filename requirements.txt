@@ -30,3 +30,6 @@ flake8
 # Testing
 pytest
 pytest-django
+
+# Faker Data
+Faker
