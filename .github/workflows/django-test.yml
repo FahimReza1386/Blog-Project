@@ -29,3 +29,9 @@ jobs:
         - name: Run Docker Compose  
           run: |  
             sudo docker-compose up -d  
+          
+        - name: test Docker
+          run : docker exec backend sh -c "flake8 && pytest . "
+    
+
+
