@@ -15,14 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup Docker-compose
-      run: docker-compose up -d
-    - name: Wait for backend to be ready  
-      run: |  
-        for i in {1..30}; do  
-            if [ "$(docker inspect -f '{{.State.Running}}' backend)" == "true" ]; then  
-              break  
-            fi  
-            sleep 1  
-        done  
+      run:  docker-compose up -d
     - name: Run Test
       run: docker exec backend sh -c "pytest ."
