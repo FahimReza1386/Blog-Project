@@ -19,9 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
     # content = serializers.CharField(read_only=True)
 
     snipped = serializers.ReadOnlyField(source="get_snipped")
-    relative_url = serializers.URLField(
-        source="get_absolute_api_url", read_only=True
-    )
+    relative_url = serializers.URLField(source="get_absolute_api_url", read_only=True)
     absolute_url = serializers.SerializerMethodField()
     category = serializers.SlugRelatedField(
         many=False, slug_field="name", queryset=Category.objects.all()
