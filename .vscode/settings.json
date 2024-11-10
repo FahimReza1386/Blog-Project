@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "authtoken",
+        "corsheaders",
         "djoser",
         "filterset",
         "indexview",
@@ -10,7 +11,7 @@
         "yasg"
     ],
     "workbench.colorCustomizations": {
-        "activityBar.background": "#083144",
+        "activityBar.background": "#084435",
         "titleBar.activeBackground": "#0C455F",
         "titleBar.activeForeground": "#F5FBFE"
     },
