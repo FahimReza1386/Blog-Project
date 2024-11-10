@@ -19,6 +19,7 @@ djangorestframework-simplejwt
 
 # Email Third Party modules
 django-mail-templated
+django-cors-headers
 
 
 
