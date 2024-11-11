@@ -3,6 +3,7 @@
         "authtoken",
         "corsheaders",
         "djoser",
+        "Fahim",
         "filterset",
         "indexview",
         "paginations",
