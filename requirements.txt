@@ -13,7 +13,7 @@ markdown
 django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
-
+locust
 
 # deployment modules
 
