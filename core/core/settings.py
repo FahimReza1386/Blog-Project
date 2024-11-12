@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "mail_templated",
     "djoser",
     "corsheaders",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -201,3 +202,11 @@ CORS_ORIGIN_WHITELIST = [
 
 
 CELERY_BROKER_URL = 'redis://redis:6379/1'
+
+
+CELERY_BEAT_SCHEDULE = {
+    'send_email' : {
+        'task' : 'accounts.tasks.sendEmail',
+        'schedule':6
+    }
+}

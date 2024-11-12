@@ -3,5 +3,5 @@ from time import sleep
 
 @app.task
 def sendEmail():
-    sleep(3)
+    sleep(4)
     print('Done Sending Email. by')
