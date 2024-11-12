@@ -5,6 +5,7 @@ services:
   redis:
     container_name: redis
     image: redis
+    restart: always
     ports:
       - "6379:6379"
 
@@ -21,6 +22,17 @@ services:
     environment:
       - SECRET_KEY=Test
       - DEBUG=True
+    
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: celery -A proj worker --loglevel=info
+    depends_on:
+      - redis
+      - backend
+
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
@@ -42,11 +54,11 @@ services:
       - ./core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --master -H http://backend:8000
   
-  worker:
-    image: locustio/locust
-    volumes:
-      - ./core/locust:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --worker --master-host master
+  # worker:
+  #   image: locustio/locust
+  #   volumes:
+  #     - ./core/locust:/mnt/locust
+  #   command: -f /mnt/locust/locustfile.py --worker --master-host master
 
 volumes:
   smtp4dev-data:
