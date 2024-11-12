@@ -28,7 +28,9 @@ services:
 
   worker:
     build: .
-    command: celery -A proj worker --loglevel=info
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - ./core:/app
     depends_on:
       - redis
       - backend
@@ -54,11 +56,5 @@ services:
       - ./core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --master -H http://backend:8000
   
-  # worker:
-  #   image: locustio/locust
-  #   volumes:
-  #     - ./core/locust:/mnt/locust
-  #   command: -f /mnt/locust/locustfile.py --worker --master-host master
-
 volumes:
   smtp4dev-data:
