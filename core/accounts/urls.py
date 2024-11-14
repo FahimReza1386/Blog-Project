@@ -9,5 +9,7 @@ urlpatterns = [
     path("api/v1/", include("accounts.api.v1.urls")),
     #     path('api/v2/' , include('djoser.urls')),
     path('api/v2/' , include('djoser.urls.jwt')),
-    path('sendEmail/' , views.send_email),
+    path('sendEmail/' , views.send_email , name="SendEmail-BeatCelery"),
+    path('test/' , views.test , name="Test"),
+
 ]
