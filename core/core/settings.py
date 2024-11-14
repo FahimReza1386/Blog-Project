@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "mail_templated",
     "djoser",
     "corsheaders",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -198,3 +199,27 @@ EMAIL_USE_TLS = False
 CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:8000"
 ]
+
+
+CELERY_BROKER_URL = 'redis://redis:6379/1'
+
+
+CELERY_BEAT_SCHEDULE = {
+    'send_email' : {
+        'task' : 'accounts.tasks.sendEmail',
+        'schedule':6
+    }
+}
+
+
+# Caching Configs
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}

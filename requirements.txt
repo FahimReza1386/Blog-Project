@@ -13,7 +13,7 @@ markdown
 django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
-locust
+
 
 # deployment modules
 
@@ -34,3 +34,14 @@ pytest-django
 
 # Faker Data
 Faker
+
+
+
+# Background Process And Cache
+celery
+django_celery_beat
+redis
+
+
+# Caching 
+django-redis
