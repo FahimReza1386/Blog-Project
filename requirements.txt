@@ -16,6 +16,9 @@ djangorestframework-simplejwt
 
 
 # deployment modules
+gunicorn
+
+
 
 # Email Third Party modules
 django-mail-templated
