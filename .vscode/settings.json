@@ -1,10 +1,28 @@
 {
     "cSpell.words": [
-        "indexview"
+        "authtoken",
+        "corsheaders",
+        "djoser",
+        "Fahim",
+        "filterset",
+        "indexview",
+        "paginations",
+        "simplejwt",
+        "viewsets",
+        "yasg"
     ],
     "workbench.colorCustomizations": {
-        "activityBar.background": "#083144",
+        "activityBar.background": "#084435",
         "titleBar.activeBackground": "#0C455F",
         "titleBar.activeForeground": "#F5FBFE"
-    }
+    },
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "*test.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
 }

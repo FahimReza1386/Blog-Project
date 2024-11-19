@@ -10,12 +10,14 @@ class DefaultPagination(PageNumberPagination):
     """
 
     def get_paginated_response(self, data):
-        return Response({
-            'Links_Pagination': {
-                'Next_Page': self.get_next_link(),
-                'Previous': self.get_previous_link()
-            },
-            'Posts_Count': self.page.paginator.count,
-            'Total_Pages': self.page.paginator.num_pages,
-            'The_Posts_Information': data
-    })
+        return Response(
+            {
+                "Links_Pagination": {
+                    "Next_Page": self.get_next_link(),
+                    "Previous": self.get_previous_link(),
+                },
+                "Posts_Count": self.page.paginator.count,
+                "Total_Pages": self.page.paginator.num_pages,
+                "The_Posts_Information": data,
+            }
+        )
