@@ -11,7 +11,7 @@ class TestUrl(TestCase):
         self.assertEquals(resolve(url).func.view_class, indexview)
 
     def test_blog_post_list_url_resolve(self):
-        url = reverse("blog:post-detail2")
+        url = reverse("blog:post-listApi")
         self.assertEqual(resolve(url).func.view_class, Posts)
 
     def test_blog_post_detail_url_resolve(self):
