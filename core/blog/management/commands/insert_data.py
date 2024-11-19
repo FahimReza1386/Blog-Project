@@ -5,24 +5,21 @@ from blog.models import Post, Category
 from datetime import datetime
 import random
 
-category_name = [
-    'IT',
-    'Fun',
-    'Programming',
-    "Trading"
-]
+category_name = ["IT", "Fun", "Programming", "Trading"]
 
 
 class Command(BaseCommand):
-    
+
     help = "inserting dummy data."
 
-    def __init__(self, *args , **kwargs):
-        super().__init__(*args , **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fake = Faker()
 
     def handle(self, *args, **options):
-        user = User.objects.create_user(email = self.fake.email() , password=self.fake.password())
+        user = User.objects.create_user(
+            email=self.fake.email(), password=self.fake.password()
+        )
         user.is_verified = True
         user.save()
         profile = Profile.objects.get(user=user)
@@ -32,11 +29,8 @@ class Command(BaseCommand):
         profile.save()
         print(profile)
 
-
-
         for name in category_name:
             Category.objects.get_or_create(name=name)
-
 
         for _ in range(10):
             Post.objects.create(
@@ -45,5 +39,5 @@ class Command(BaseCommand):
                 content=self.fake.paragraph(nb_sentences=5),
                 status=random.choice([True, False]),
                 category=Category.objects.get(name=random.choice(category_name)),
-                published_date=datetime.now()
+                published_date=datetime.now(),
             )

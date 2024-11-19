@@ -8,8 +8,7 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     path("api/v1/", include("accounts.api.v1.urls")),
     #     path('api/v2/' , include('djoser.urls')),
-    path('api/v2/' , include('djoser.urls.jwt')),
-    path('sendEmail/' , views.send_email , name="SendEmail-BeatCelery"),
-    path('test/' , views.test , name="Test"),
-
+    path("api/v2/", include("djoser.urls.jwt")),
+    path("sendEmail/", views.send_email, name="SendEmail-BeatCelery"),
+    path("test/", views.test, name="Test"),
 ]

@@ -124,4 +124,4 @@ def api_post_list_view(request):
 
 
 class PostListApi(TemplateView):
-    template_name='blog/post_list_api.html'
+    template_name = "blog/post_list_api.html"

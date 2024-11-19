@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config # type: ignore
+from decouple import config  # type: ignore
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,7 +68,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware"
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -195,20 +195,14 @@ EMAIL_HOST_PASSWORD = ""
 EMAIL_USE_TLS = False
 
 
-
-CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:8000"
-]
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000"]
 
 
-CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_BROKER_URL = "redis://redis:6379/1"
 
 
 CELERY_BEAT_SCHEDULE = {
-    'send_email' : {
-        'task' : 'accounts.tasks.sendEmail',
-        'schedule':6
-    }
+    "send_email": {"task": "accounts.tasks.sendEmail", "schedule": 6}
 }
 
 
@@ -220,6 +214,6 @@ CACHES = {
         "LOCATION": "redis://redis:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        },
     }
 }
