@@ -21,7 +21,7 @@ services:
       - "8000:8000"
     environment:
       - SECRET_KEY=Test
-      - DEBUG=True
+      - DEBUG=Trueg
     
     depends_on:
       - redis
